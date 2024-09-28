@@ -1,28 +1,36 @@
 package telran.interview;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
 public class ConnectionPool {
-    // TODO work out data structure
-    // Connection pool comprises of some number of connection
-    // it cannot contains more than the predifined number of connections
-    // policy of removing connection - if number of connections is going to exceed
-    // limit a connection should be removed from connection pool
-    // Policy should be in consideration the order odf adding connections in pool
-    // and using connections
+    private final int connectionsLimit;
+    private final LinkedHashMap<String, Connection> connectionPool;
 
     public ConnectionPool(int size) {
-        // TODO constructor;
+        this.connectionsLimit = size;
+        this.connectionPool = new LinkedHashMap<String, Connection>(size, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<String, Connection> eldest) {
+                return size() > connectionsLimit;
+            }
+        };
     }
 
     public void addConnection(Connection connection) {
-        // TODO
-        // exception should be thrown if connection already exist IllegalStateException
+        String connectionId = connection.connectionId();
+        if (connectionPool.containsKey(connectionId)) {
+            throw new IllegalStateException();
+        }
+        connectionPool.put(connectionId, connection);
     }
 
     public Connection getConnection(String connectionId) {
-        // TODO
-        // If connection with a given ID does not exist the NoSuchElementException
-        // should be thrown
-        return null;
+        Connection connection = connectionPool.get(connectionId);
+        if (connection == null) {
+            throw new NoSuchElementException();
+        }
+        return connection;
     }
-
 }
