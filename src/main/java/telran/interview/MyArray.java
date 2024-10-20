@@ -1,35 +1,34 @@
 package telran.interview;
 
+import java.util.HashMap;
+
 public class MyArray<T> {
-    private final Object[] array;
-    private Object setAllValue;
-    private boolean isSetAll;
+	private final int size;
+	private T defaultValue;
+	private final HashMap<Integer, T> array;
 
-    public void setAll(T value) {
-        setAllValue = value;
-        isSetAll = true;
-    }
+	public void setAll(T value) {
+		this.defaultValue = value;
+		this.array.clear();
+	}
 
-    public void set(int index, T value) {
-        if (index < 0 || index >= array.length) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
-        array[index] = value;
-        isSetAll = false;
-    }
+	public void set(int index, T value) {
+		if (index < 0 || index >= size) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		array.put(index, value);
+	}
 
-    @SuppressWarnings("unchecked")
-    public T get(int index) {
-        if (index < 0 || index >= array.length) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
-        return isSetAll ? (T) setAllValue : (T) array[index];
+	public T get(int index) {
+		if (index < 0 || index >= size) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		return array.getOrDefault(index, defaultValue);
+	}
 
-    }
-
-    public MyArray(int size) {
-        array = new Object[size];
-        setAllValue = null;
-        isSetAll = false;
-    }
+	public MyArray(int size) {
+		this.size = size;
+		this.defaultValue = null;
+		this.array = new HashMap<>();
+	}
 }

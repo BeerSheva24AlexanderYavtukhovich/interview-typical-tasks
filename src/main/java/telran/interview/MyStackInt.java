@@ -1,21 +1,21 @@
 package telran.interview;
 
-import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.LinkedList;
 
 public class MyStackInt {
-    private final ArrayList<Integer> stack;
-    private final ArrayList<Integer> maxStack;
+    private final LinkedList<Integer> stack;
+    private final LinkedList<Integer> maxStack;
 
     public MyStackInt() {
-        stack = new ArrayList<>();
-        maxStack = new ArrayList<>();
+        stack = new LinkedList<>();
+        maxStack = new LinkedList<>();
     }
 
     public void push(int num) {
-        stack.add(num);
-        if (maxStack.isEmpty() || num >= maxStack.get(maxStack.size() - 1)) {
-            maxStack.add(num);
+        stack.addLast(num);
+        if (maxStack.isEmpty() || num >= maxStack.getLast()) {
+            maxStack.addLast(num);
         }
     }
 
@@ -23,9 +23,9 @@ public class MyStackInt {
         if (stack.isEmpty()) {
             throw new EmptyStackException();
         }
-        int num = stack.remove(stack.size() - 1);
-        if (num == maxStack.get(maxStack.size() - 1)) {
-            maxStack.remove(maxStack.size() - 1);
+        int num = stack.removeLast();
+        if (num == maxStack.getLast()) {
+            maxStack.removeLast();
         }
         return num;
     }
@@ -34,7 +34,7 @@ public class MyStackInt {
         if (stack.isEmpty()) {
             throw new EmptyStackException();
         }
-        return stack.get(stack.size() - 1);
+        return stack.getLast();
     }
 
     public boolean isEmpty() {
@@ -45,7 +45,6 @@ public class MyStackInt {
         if (maxStack.isEmpty()) {
             throw new EmptyStackException();
         }
-        return maxStack.get(maxStack.size() - 1);
+        return maxStack.getLast();
     }
-
 }

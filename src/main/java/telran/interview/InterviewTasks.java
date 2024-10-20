@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -45,13 +46,24 @@ public class InterviewTasks {
     }
 
     public static boolean isAnagram(String word, String anagram) {
-        return word.length() == anagram.length()
-            && !word.equals(anagram)
-            && word.chars()
-                   .mapToObj(c -> (char) c)
-                   .collect(Collectors.groupingBy(c -> c, Collectors.counting()))
-                   .equals(anagram.chars()
-                                  .mapToObj(c -> (char) c)
-                                  .collect(Collectors.groupingBy(c -> c, Collectors.counting())));
+        boolean isAnagram = true;
+
+        if (word.length() != anagram.length() || word.equals(anagram)) {
+            isAnagram = false;
+        } else {
+            Map<Character, Integer> charCount = word.chars()
+                    .mapToObj(c -> (char) c)
+                    .collect(Collectors.toMap(c -> c, c -> 1, Integer::sum));
+
+            for (char c : anagram.toCharArray()) {
+                if (!charCount.containsKey(c) || charCount.get(c) == 0) {
+                    isAnagram = false;
+                } else {
+                    charCount.put(c, charCount.get(c) - 1);
+                }
+            }
+        }
+
+        return isAnagram;
     }
 }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MyArrayTest {
-    private static final int N_ELEMENTS = 100_000_000;
+    private static final int N_ELEMENTS = 1_000_000_000;
     private static final Integer ALL_VALUES = 5;
     MyArray<Integer> myArray;
 
