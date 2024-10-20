@@ -45,4 +45,16 @@ class MyArrayTest {
             assertEquals(ALL_VALUES, myArray.get(i));
         }
     }
+
+    @Test
+    void testSetAllAndSet() {
+        myArray.set(5, 20);
+        myArray.set(6, 30);
+        myArray.setAll(100);
+        assertEquals(100, myArray.get(5));
+        myArray.set(6, 50);
+        assertEquals(50, myArray.get(6));
+        assertEquals(100, myArray.get(5));
+    }
+
 }

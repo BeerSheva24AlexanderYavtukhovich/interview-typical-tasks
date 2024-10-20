@@ -5,11 +5,11 @@ import java.util.HashMap;
 public class MyArray<T> {
 	private final int size;
 	private T defaultValue;
-	private final HashMap<Integer, T> array;
+	private HashMap<Integer, T> array;
 
 	public void setAll(T value) {
 		this.defaultValue = value;
-		this.array.clear();
+		this.array = new HashMap<>();
 	}
 
 	public void set(int index, T value) {
