@@ -46,23 +46,22 @@ public class InterviewTasks {
     }
 
     public static boolean isAnagram(String word, String anagram) {
-        boolean[] isAnagram = { true };
+        int isAnagram = 1;
 
         if (word.length() != anagram.length() || word.equals(anagram)) {
-            isAnagram[0] = false;
+            isAnagram = -1;
         } else {
             Map<Character, Integer> charCount = word.chars()
                     .mapToObj(c -> (char) c)
                     .collect(Collectors.toMap(c -> c, c -> 1, Integer::sum));
 
-            for (char c : anagram.toCharArray()) {
-                charCount.compute(c, (k, v) -> {
-                    isAnagram[0] = isAnagram[0] && (v != null && v > 0);
-                    return v == null || v == 0 ? 0 : v - 1;
-                });
+            int i = 0;
+            while (i < anagram.length() && isAnagram > 0) {
+                char c = anagram.charAt(i);
+                isAnagram = charCount.compute(c, (k, v) -> v == null ? -1 : v - 1);
+                i++;
             }
         }
-
-        return isAnagram[0];
+        return isAnagram > 0;
     }
 }
