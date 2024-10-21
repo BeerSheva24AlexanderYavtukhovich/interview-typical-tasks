@@ -77,6 +77,8 @@ public class InterviewTasksTest {
         assertTrue(InterviewTasks.isAnagram(word, "olleh"));
         assertTrue(InterviewTasks.isAnagram(word, "elloh"));
         assertTrue(InterviewTasks.isAnagram(word, "hleol"));
+        assertFalse(InterviewTasks.isAnagram(word, "hleofgfgl"));
+        assertFalse(InterviewTasks.isAnagram(word, "fgfgg"));
         assertFalse(InterviewTasks.isAnagram(word, word));
         assertFalse(InterviewTasks.isAnagram(word, "olle"));
         assertFalse(InterviewTasks.isAnagram(word, "ollhh"));

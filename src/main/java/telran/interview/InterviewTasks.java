@@ -3,6 +3,7 @@ package telran.interview;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -46,22 +47,17 @@ public class InterviewTasks {
     }
 
     public static boolean isAnagram(String word, String anagram) {
-        int isAnagram = 1;
+        boolean isAnagram;
 
         if (word.length() != anagram.length() || word.equals(anagram)) {
-            isAnagram = -1;
+            isAnagram = false;
         } else {
-            Map<Character, Integer> charCount = word.chars()
-                    .mapToObj(c -> (char) c)
-                    .collect(Collectors.toMap(c -> c, c -> 1, Integer::sum));
+            Map<Character, Integer> charCount = new HashMap<>();
 
-            int i = 0;
-            while (i < anagram.length() && isAnagram > 0) {
-                char c = anagram.charAt(i);
-                isAnagram = charCount.compute(c, (k, v) -> v == null ? -1 : v - 1);
-                i++;
-            }
+            word.chars().forEach(c -> charCount.merge((char) c, 1, Integer::sum));
+
+            isAnagram = anagram.chars().allMatch(c -> charCount.merge((char) c, -1, Integer::sum) >= 0);
         }
-        return isAnagram > 0;
+        return isAnagram;
     }
 }
