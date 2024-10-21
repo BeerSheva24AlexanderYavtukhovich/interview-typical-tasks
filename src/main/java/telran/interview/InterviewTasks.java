@@ -56,7 +56,8 @@ public class InterviewTasks {
 
             word.chars().forEach(c -> charCount.merge((char) c, 1, Integer::sum));
 
-            isAnagram = anagram.chars().allMatch(c -> charCount.merge((char) c, -1, Integer::sum) >= 0);
+            isAnagram = anagram.chars()
+                    .allMatch(c -> charCount.compute((char) c, (key, val) -> (val == null ? 0 : val) - 1) >= 0);
         }
         return isAnagram;
     }
